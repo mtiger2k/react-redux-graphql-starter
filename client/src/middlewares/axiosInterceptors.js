@@ -8,7 +8,7 @@ const setupAxiosInterceptors = (onUnauthenticated) => {
     const onRequestSuccess = config => {
         var token = localStorage.getItem('auth-token');
         if (token) {
-            config.headers['Authorization'] = 'JWT '.concat(token);
+            config.headers['Authorization'] = 'bearer '.concat(token);
         }
         config.timeout = 10000;
         return config;

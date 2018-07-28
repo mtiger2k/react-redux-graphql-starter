@@ -70,7 +70,7 @@ export default () => {
     return {
       headers: {
         ...headers,
-        authorization: token ? `JWT ${token}` : "",
+        authorization: token ? `bearer ${token}` : "",
       }
     }
   });

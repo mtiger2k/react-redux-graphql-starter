@@ -1,4 +1,4 @@
-# coreui-react-redux-apollo-graphql-2-auth
+# zhiyun-coreui
 
 Full-stack GraphQL application with React, redux, and Apollo 2, with full backend authentication support
 
