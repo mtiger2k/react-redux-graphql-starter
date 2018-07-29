@@ -55,7 +55,7 @@ export default (initialState) => {
     history.push('/login');
   }
 
-  setupAxiosInterceptors(logoutCallback);
+  setupAxiosInterceptors(logoutCallback, store);
 
   return store;
 
