@@ -1,6 +1,6 @@
-# zhiyun-coreui
+# react-redux-graphql-starter
 
-Full-stack GraphQL application with React, redux, and Apollo 2, with full backend authentication support
+Full-stack GraphQL application with React, redux, and Apollo 2, with full backend passport and mongo support
 
 ## Running the app
 
@@ -9,6 +9,8 @@ Full-stack GraphQL application with React, redux, and Apollo 2, with full backen
 ```
 cd server
 npm install
+cp .env.sample .env
+configure MONGODB_URL in .env
 npm start
 ```
 
@@ -28,7 +30,10 @@ npm start
 ## Features
 
 * coreui-react: [CoreUI Free React.js Admin Template](https://github.com/coreui/coreui-free-react-admin-template)
-* redux & [redux-form](https://github.com/erikras/redux-form)
+* [redux-form](https://github.com/erikras/redux-form)
+* [redux-thunk](https://github.com/reduxjs/redux-thunk)
+* [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware)
+* react-router v4
 * apollo-client v2.3 with subscription
 * graphql server
 * apollo upload
