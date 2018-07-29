@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import LoginForm from './LoginForm'
-import { signinUser, authError } from '../../../modules/auth'
+import { login, authError } from '../../../modules/auth'
 
 class Login extends Component {
 
@@ -15,7 +15,7 @@ class Login extends Component {
   }
 
   handleSubmit({username, password}) {
-    this.props.signinUser({username, password})
+    this.props.login({username, password})
   }
 
   render() {
@@ -56,7 +56,7 @@ class Login extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      signinUser,
+      login,
       authError,
     },
     dispatch

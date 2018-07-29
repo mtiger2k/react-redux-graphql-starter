@@ -48,9 +48,9 @@ exports.me = function(req, res, next) {
 exports.update = function(req, res, next) {
   let user = req.body.user;
   //console.log(user);
-  User.findByIdAndUpdate(req.user._id, {$set: {mobileNo: user.mobileNo, dispName: user.dispName}}, {new: true}, (err, user) => {
+  User.findByIdAndUpdate(req.user._id, {$set: {mobileNo: user.mobileNo, dispName: user.dispName}}, {new: true}, (err, newuser) => {
     logger.info(`${user.dispName} updated`);
-  	res.json({result: 'success'});
+  	res.json({r_id: newuser._id, username: newuser.username, role: newuser.role});
   })
 }
 
@@ -93,7 +93,7 @@ exports.changePassword = function(req, res, next) {
                 User.findOne({
                     _id: mongoose.Types.ObjectId(req.user._id)
                 },'-password', function(err, returnUser) {
-                    res.json(returnUser)
+                    res.json({ error: null })
                 })
             });
         }

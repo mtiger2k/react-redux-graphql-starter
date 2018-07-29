@@ -1,3 +1,6 @@
+import update from 'immutability-helper';
+import { REQUEST, SUCCESS, FAILURE } from './actionType'
+
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
 export const INCREMENT = 'counter/INCREMENT'
 export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED'
@@ -11,31 +14,17 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case INCREMENT_REQUESTED:
-      return {
-        ...state,
-        isIncrementing: true
-      }
+    case REQUEST(INCREMENT):
+      return update(state, {isIncrementing: {$set: true}});
 
-    case INCREMENT:
-      return {
-        ...state,
-        count: state.count + 1,
-        isIncrementing: !state.isIncrementing
-      }
+    case SUCCESS(INCREMENT):
+      return update(state, {count: {$set: state.count + 1}, isIncrementing: {$set: !state.isIncrementing}});
 
-    case DECREMENT_REQUESTED:
-      return {
-        ...state,
-        isDecrementing: true
-      }
+    case REQUEST(DECREMENT):
+      return update(state, {isDecrementing: {$set: true}});
 
-    case DECREMENT:
-      return {
-        ...state,
-        count: state.count - 1,
-        isDecrementing: !state.isDecrementing
-      }
+    case SUCCESS(DECREMENT):
+      return update(state, {count: {$set: state.count - 1}, isDecrementing: {$set: !state.isDecrementing}});
 
     default:
       return state
@@ -45,11 +34,11 @@ export default (state = initialState, action) => {
 export const increment = () => {
   return dispatch => {
     dispatch({
-      type: INCREMENT_REQUESTED
+      type: REQUEST(INCREMENT)
     })
 
     dispatch({
-      type: INCREMENT
+      type: SUCCESS(INCREMENT)
     })
   }
 }
@@ -57,25 +46,25 @@ export const increment = () => {
 export const incrementAsync = () => {
   return dispatch => {
     dispatch({
-      type: INCREMENT_REQUESTED
+      type: INCREMENT,
+      payload: new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 3000)
+      })
     })
 
-    return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
-      })
-    }, 3000)
   }
 }
 
 export const decrement = () => {
   return dispatch => {
     dispatch({
-      type: DECREMENT_REQUESTED
+      type: REQUEST(DECREMENT)
     })
 
     dispatch({
-      type: DECREMENT
+      type: SUCCESS(DECREMENT)
     })
   }
 }
@@ -83,13 +72,14 @@ export const decrement = () => {
 export const decrementAsync = () => {
   return dispatch => {
     dispatch({
-      type: DECREMENT_REQUESTED
+      type: DECREMENT,
+      payload: new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 3000)
+      })
     })
 
-    return setTimeout(() => {
-      dispatch({
-        type: DECREMENT
-      })
-    }, 3000)
   }
 }
+

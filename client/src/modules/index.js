@@ -7,7 +7,6 @@ import user from './user'
 
 export default combineReducers({
   counter, auth, user, 
-  //apollo: apolloReducer,
   form: formReducer,
   loadingBar
 })

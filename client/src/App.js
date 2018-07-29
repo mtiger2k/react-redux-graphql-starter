@@ -6,7 +6,7 @@ import { ApolloProvider } from 'react-apollo';
 import configureStore, { history } from './store'
 import configureClient from './client'
 
-import { me } from './modules/user'
+import { getCurrentUser } from './modules/user'
 
 import Logout from './views/Pages/Login/Logout'
 
@@ -43,7 +43,7 @@ class App extends Component {
     let token = localStorage.getItem('auth-token');
     if (token) {
       // get user info if the token exists
-      store.dispatch(me());
+      store.dispatch(getCurrentUser());
     }
   }
 

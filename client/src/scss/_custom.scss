@@ -1,1 +1,9 @@
 // Here you can add other styles
+
+.loading-bar {
+  height: 3px;
+  background-color: #009cd8;
+  position: absolute;
+  top: 0px;
+  z-index: 1031;
+}

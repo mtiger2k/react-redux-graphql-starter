@@ -1,17 +1,18 @@
 import axios from 'axios'
 import update from 'immutability-helper';
-import { me, CLEAR_USER } from './user'
+import { getCurrentUser, CLEAR_USER } from './user'
+import { REQUEST, SUCCESS, FAILURE } from './actionType'
 
-export const AUTH_USER = 'auth_user'
-export const UNAUTH_USER = 'unauth_user'
-export const AUTH_ERROR = 'auth_error'
+export const AUTH_USER = 'AUTH_USER'
+export const UNAUTH_USER = 'UNAUTH_USER'
+export const AUTH_ERROR = 'AUTH_ERROR'
 
-export default function authReducer(state = {authenticated: false, token: null, user: {}}, action) {
+export default function authReducer(state = {authenticated: false, token: null}, action) {
   switch (action.type) {
-    case AUTH_USER:
-      return update(state, {error: {$set: ''}, authenticated: {$set: true}, token: {$set: action.payload.token}, user: {$set: action.payload.user}})
+    case SUCCESS(AUTH_USER):
+      return update(state, {error: {$set: ''}, authenticated: {$set: true}, token: {$set: action.payload.data.token}})
     case UNAUTH_USER:
-      return update(state, {authenticated: {$set: false}, token: {$set: null}, user: {$set: {}}})
+      return update(state, {authenticated: {$set: false}, token: {$set: null}})
     case AUTH_ERROR:
       return update(state, {error: {$set: action.payload}})
     default:
@@ -19,45 +20,31 @@ export default function authReducer(state = {authenticated: false, token: null, 
   }
 }
 
-export function signinUser({username, password}) {
+export const login = ({username, password}) => dispatch => 
+  dispatch({
+    type: AUTH_USER,
+    payload: axios.post(`/signin`, {username, password})
+  }).then(({value, action}) => {
+    localStorage.setItem('auth-token', value.data.token)
+    dispatch(getCurrentUser())
+  })
 
-  return function (dispatch) {
+export const register = ({username, password}) => dispatch => 
+  dispatch({
+    type: AUTH_USER,
+    payload: axios.post(`/signup`, {username, password})
+  }).then(({value, action}) => {
+    localStorage.setItem('auth-token', value.data.token)
+    dispatch(getCurrentUser())
+  })
 
-    // submit username and password to server
-    const request = axios.post(`/signin`, {username, password})
-    request
-      .then(response => {
-        // -Save the JWT token
-        localStorage.setItem('auth-token', response.data.token)
-
-        // -if request is good, we need to update state to indicate user is authenticated
-        dispatch({type: AUTH_USER, payload: response.data})
-        dispatch(me())
-      })
-  }
-}
-
-export function signoutUser() {
+export const signoutUser = () => dispatch => {
   localStorage.removeItem('auth-token')
-  return function(dispatch) {
-    dispatch(
-      {type: UNAUTH_USER}
-    )
-    dispatch({type: CLEAR_USER})
-  }
+  dispatch({type: UNAUTH_USER})
+  dispatch({type: CLEAR_USER})
 }
 
-export function signupUser({username, password, dispName, mobileNo}) {
-  return function (dispatch) {
-    axios.post(`/signup`, {username, password, dispName, mobileNo})
-      .then(response => {
-        dispatch({type: AUTH_USER, payload: response.data})
-        localStorage.setItem('auth-token', response.data.token)
-      })
-  }
-}
-
-export function authError(error) {
+export const authError = (error) => {
   return {
     type: AUTH_ERROR,
     payload: error
