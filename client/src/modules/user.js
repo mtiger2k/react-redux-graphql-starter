@@ -31,7 +31,10 @@ export default function userReducer(state = {user: null, loading: true, successM
 export const getCurrentUser = () => {
   return {
     type: FETCH_ME,
-    payload: axios.get('/me')
+    payload: axios.get('/me'),
+    meta: {
+      successMessage: '已成功载入登录信息！'
+    }
   }
 }
 

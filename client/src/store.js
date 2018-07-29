@@ -7,6 +7,7 @@ import createHistory from 'history/createBrowserHistory'
 import { createLogger } from 'redux-logger'
 import appReducer from './modules'
 import { setupAxiosInterceptors } from './middlewares/axiosInterceptors';
+import notificationMiddleware from './middlewares/notification-middleware';
 import { UNAUTH_USER, AUTH_ERROR } from './modules/auth'
 import { CLEAR_USER } from './modules/user'
 
@@ -15,7 +16,7 @@ export const history = createHistory()
 export default (initialState) => {
 
   const enhancers = []
-  const middleware = [thunk, promiseMiddleware(), loadingBarMiddleware(), routerMiddleware(history)]
+  const middleware = [thunk, notificationMiddleware, promiseMiddleware(), loadingBarMiddleware(), routerMiddleware(history)]
 
   if (process.env.NODE_ENV === 'development') {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__

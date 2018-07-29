@@ -24,6 +24,7 @@ import './scss/style.css'
 //import './App.css';
 
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Containers
 import { DefaultLayout } from './layout';
