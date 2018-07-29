@@ -9869,5 +9869,12 @@ body {
 .app-header .navbar-nav .dropdown-menu-right {
   right: auto; }
 
+.loading-bar {
+  height: 3px;
+  background-color: #009cd8;
+  position: absolute;
+  top: 0px;
+  z-index: 1031; }
+
 html body .app.flex-row.align-items-center {
   height: 100vh; }
