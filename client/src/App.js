@@ -50,8 +50,8 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-      <ApolloProvider client={client}>
         <ConnectedRouter history={history}>
+        <ApolloProvider client={client}>
           <Switch>
             <Route exact path="/login" name="Login Page" component={Login} />
             <Route exact path="/logout" name="Logout Page" component={Logout} />
@@ -60,8 +60,8 @@ class App extends Component {
             <Route exact path="/500" name="Page 500" component={Page500} />
             <Route path="/" name="Home" component={DefaultLayout} />
           </Switch>
+        </ApolloProvider>
         </ConnectedRouter>
-      </ApolloProvider>
       </Provider>
     );
   }
