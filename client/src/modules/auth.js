@@ -35,13 +35,15 @@ export const register = ({username, password}) => dispatch =>
     payload: axios.post(`/signup`, {username, password})
   }).then(({value, action}) => {
     localStorage.setItem('auth-token', value.data.token)
-    dispatch(getCurrentUser())
+    dispatch(getCurrentUser());
+    // TODO: init global variables
   })
 
 export const signoutUser = () => dispatch => {
-  localStorage.removeItem('auth-token')
-  dispatch({type: UNAUTH_USER})
-  dispatch({type: CLEAR_USER})
+  localStorage.removeItem('auth-token');
+  dispatch({type: 'USER_LOGOUT'});
+  //dispatch({type: UNAUTH_USER})
+  //dispatch({type: CLEAR_USER})
 }
 
 export const authError = (error) => {

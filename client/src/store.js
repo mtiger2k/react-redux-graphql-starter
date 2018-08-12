@@ -40,7 +40,15 @@ export default (initialState) => {
     };
   }
 
-  const rootReducer = connectRouter(history)(appReducer);
+  const appReducer2 = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+      const { routing } = state
+      state = { routing } 
+    }
+    return appReducer(state, action)
+  }
+
+  const rootReducer = connectRouter(history)(appReducer2);
 
   const store = createStore(
     rootReducer,
@@ -50,13 +58,16 @@ export default (initialState) => {
 
   const logoutCallback = (authError)=> {
     store.dispatch({ type: AUTH_ERROR, payload: authError });
-    store.dispatch({ type: UNAUTH_USER });
-    store.dispatch({ type: CLEAR_USER });
+    store.dispatch({type: 'USER_LOGOUT'});
+    //store.dispatch({ type: UNAUTH_USER });
+    //store.dispatch({ type: CLEAR_USER });
     localStorage.removeItem('auth-token');
     history.push('/login');
   }
 
   setupAxiosInterceptors(logoutCallback, store);
+
+  // TODO: init global variables
 
   return store;
 
