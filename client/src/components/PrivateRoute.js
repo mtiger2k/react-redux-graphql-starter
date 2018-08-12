@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import ErrorBoundary from './Error';
 
-const PrivateRouteComponent = ({route, authenticated, user, ...rest}) => {
+const PrivateRouteComponent = ({route, authenticated, user, loading, ...rest}) => {
   const renderRedirect = props => {
-    if (route.private && !authenticated) {
+    if (route.private && !loading && !authenticated) {
       return (
         <Redirect to={{
           pathname: '/login',
@@ -15,8 +15,6 @@ const PrivateRouteComponent = ({route, authenticated, user, ...rest}) => {
           }
         }}/>
       )
-    } else if(route.private && !user) {
-      return <div>Loading user...</div>
     } else {
       return (
         <ErrorBoundary>
@@ -32,7 +30,8 @@ const PrivateRouteComponent = ({route, authenticated, user, ...rest}) => {
 function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
-    user: state.user.user
+    user: state.user.user,
+    loading: state.user.loading
   }
 }
 

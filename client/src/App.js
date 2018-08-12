@@ -40,14 +40,6 @@ const client = configureClient();
 
 class App extends Component {
 
-  componentDidMount() {
-    let token = localStorage.getItem('auth-token');
-    if (token) {
-      // get user info if the token exists
-      store.dispatch(getCurrentUser());
-    }
-  }
-
   render() {
     return (
       <Provider store={store}>

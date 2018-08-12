@@ -9,7 +9,7 @@ import appReducer from './modules'
 import { setupAxiosInterceptors } from './middlewares/axiosInterceptors';
 import notificationMiddleware from './middlewares/notification-middleware';
 import { UNAUTH_USER, AUTH_ERROR } from './modules/auth'
-import { CLEAR_USER } from './modules/user'
+import { getCurrentUser } from './modules/user'
 
 export const history = createHistory()
 
@@ -36,7 +36,7 @@ export default (initialState) => {
   let token = localStorage.getItem('auth-token');
   if (token) {
     initialState = {
-      auth: {authenticated: true, token: token},
+      auth: {authenticated: false, token: token},
     };
   }
 
@@ -59,15 +59,16 @@ export default (initialState) => {
   const logoutCallback = (authError)=> {
     store.dispatch({ type: AUTH_ERROR, payload: authError });
     store.dispatch({type: 'USER_LOGOUT'});
-    //store.dispatch({ type: UNAUTH_USER });
-    //store.dispatch({ type: CLEAR_USER });
     localStorage.removeItem('auth-token');
     history.push('/login');
   }
 
   setupAxiosInterceptors(logoutCallback, store);
 
-  // TODO: init global variables
+  if (token) {
+    // get user info if the token exists
+    store.dispatch(getCurrentUser());
+  }
 
   return store;
 

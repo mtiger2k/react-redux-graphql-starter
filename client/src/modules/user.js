@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { REQUEST, SUCCESS, FAILURE } from './actionType'
 import update from 'immutability-helper';
+import { authenticated, authError, clearAuthToken } from './auth'
+import { push } from 'connected-react-router'
 
 export const FETCH_ME = 'FETCH_ME'
 export const UPDATE_ME = 'UPDATE_ME'
@@ -10,6 +12,8 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
 export default function userReducer(state = {user: null, loading: true, successMsg: null, errorMsg: null}, action) {
   switch (action.type) {
+    case REQUEST(FETCH_ME):
+      return update(state, {loading: {$set: true}});
     case SUCCESS(FETCH_ME):
       return update(state, {user: {$set: action.payload.data}, loading: {$set: false}});
     case SUCCESS(UPDATE_ME):
@@ -28,14 +32,27 @@ export default function userReducer(state = {user: null, loading: true, successM
   }
 }
 
-export const getCurrentUser = () => {
-  return {
+export const getCurrentUser = () => dispatch => {
+  dispatch({
     type: FETCH_ME,
     payload: axios.get('/me'),
-    meta: {
+    /*meta: {
       successMessage: '已成功载入登录信息！'
+    }*/
+  }).then(({value, action}) => {
+    let user = value.data;
+    if (!user) {
+      clearAuthToken();
+      dispatch(authError('Please login'));
+      dispatch(push('login'));
+      return;
     }
-  }
+    dispatch(authenticated());
+    // TODO: init global variables   
+  }).catch((error) => {
+    dispatch(authError('Please login'));
+    dispatch(push('login'));
+  })
 }
 
 export const updateUser = (user) => {
