@@ -10,7 +10,7 @@ export const CLEAR_USER = 'CLEAR_USER'
 export const CLEAR_MSG = 'CLEAR_MSG'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
-export default function userReducer(state = {user: null, loading: true, successMsg: null, errorMsg: null}, action) {
+export default function userReducer(state = {user: null, loading: false, successMsg: null, errorMsg: null}, action) {
   switch (action.type) {
     case REQUEST(FETCH_ME):
       return update(state, {loading: {$set: true}});

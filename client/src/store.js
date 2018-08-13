@@ -60,7 +60,7 @@ export default (initialState) => {
     store.dispatch({ type: AUTH_ERROR, payload: authError });
     store.dispatch({type: 'USER_LOGOUT'});
     localStorage.removeItem('auth-token');
-    history.push('/login');
+    history.push('login');
   }
 
   setupAxiosInterceptors(logoutCallback, store);
@@ -68,6 +68,8 @@ export default (initialState) => {
   if (token) {
     // get user info if the token exists
     store.dispatch(getCurrentUser());
+  } else {
+    history.push('login');
   }
 
   return store;
