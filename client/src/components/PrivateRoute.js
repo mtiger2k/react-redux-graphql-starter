@@ -15,6 +15,8 @@ const PrivateRouteComponent = ({route, authenticated, user, loading, ...rest}) =
           }
         }}/>
       )
+    } else if (route.private && loading) {
+      return (<div>Loading account info</div>)
     } else {
       return (
         <ErrorBoundary>
