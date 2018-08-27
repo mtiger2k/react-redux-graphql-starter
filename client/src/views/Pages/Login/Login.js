@@ -4,18 +4,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import LoginForm from './LoginForm'
-import { login, authError } from '../../../modules/auth'
+import { login } from '../../../modules/auth'
 
 class Login extends Component {
 
-  componentWillUnmount() {
-    if (this.props.errorMessage) {
-      this.props.authError(null)
-    }
-  }
-
   handleSubmit({username, password}) {
-    this.props.login({username, password})
+    return this.props.login({username, password})
   }
 
   render() {
@@ -31,7 +25,7 @@ class Login extends Component {
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
-                    <LoginForm onSubmit={this.handleSubmit.bind(this)} errorMessage={this.props.errorMessage} />
+                    <LoginForm onSubmit={this.handleSubmit.bind(this)} />
                   </CardBody>
                 </Card>
                 <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
@@ -53,19 +47,11 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      login,
-      authError,
-    },
-    dispatch
-  )
+const mapDispatchToProps = { login }
 
 function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
-    errorMessage: state.auth.error
   }
 }
 

@@ -56,8 +56,7 @@ export default (initialState) => {
     composedEnhancers
   )
 
-  const logoutCallback = (authError)=> {
-    store.dispatch({ type: AUTH_ERROR, payload: authError });
+  const logoutCallback = ()=> {
     store.dispatch({type: 'USER_LOGOUT'});
     localStorage.removeItem('auth-token');
     history.push('login');

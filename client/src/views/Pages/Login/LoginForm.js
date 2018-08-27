@@ -5,10 +5,10 @@ import { Button, Col, Form, Input, FormFeedback, InputGroup, InputGroupAddon, In
 const validate = values => {
   const errors = {}
   if (!values.username) {
-    errors.username = '必填项'
+    errors.username = 'required'
   }
   if (!values.password) {
-    errors.password = '必填项'
+    errors.password = 'required'
   }
   return errors
 }
@@ -28,7 +28,7 @@ const renderLoginField = ({ input, label, type, placeholder, icon, mb, meta: { t
 class LoginForm extends Component {
 
     render() {
-        const { handleSubmit, submitting, errorMessage } = this.props;
+        const { handleSubmit, submitting, error } = this.props;
         return (
 			<div>
 	            <h1>Login</h1>
@@ -36,10 +36,10 @@ class LoginForm extends Component {
 	            <Form onSubmit={handleSubmit}>
 	            <Field name="username" placeholder="Username" mb="mb-3" icon="icon-user" type="text" component={renderLoginField} />
 	            <Field name="password" placeholder="Password" mb="mb-4" icon="icon-lock" type="password" component={renderLoginField} />
-	            {errorMessage && <div style={{color:'red'}}>{'用户名或密码错误！'}</div>}
+	            {error && <div style={{color:'red'}}>{error}</div>}
               <Row>
 	              <Col xs="6">
-	                <Button color="primary" className="px-4" type="submit" disabled={submitting}>{submitting?'正在登录': '登录'}</Button>
+	                <Button color="primary" className="px-4" type="submit" disabled={submitting}>{submitting?'Submitting': 'Login'}</Button>
 	              </Col>
 	              <Col xs="6" className="text-right">
 	                <Button color="link" className="px-0">Forgot password?</Button>

@@ -18,7 +18,7 @@ const setupAxiosInterceptors = (onUnauthenticated, store) => {
         if (!error.response) {
 
         } else if (error.response.status === 403 || error.response.status === 401) {
-            onUnauthenticated(error.response.data.error);
+            //onUnauthenticated();
         } else if (error.response.status === 404) {
             store.dispatch(push('/404'));
         } else if (error.response.status === 500) {

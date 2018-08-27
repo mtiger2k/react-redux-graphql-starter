@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { REQUEST, SUCCESS, FAILURE } from './actionType'
 import update from 'immutability-helper';
-import { authenticated, authError, clearAuthToken } from './auth'
+import { authenticated, clearAuthToken } from './auth'
 import { push } from 'connected-react-router'
 
 export const FETCH_ME = 'FETCH_ME'
@@ -10,23 +10,18 @@ export const CLEAR_USER = 'CLEAR_USER'
 export const CLEAR_MSG = 'CLEAR_MSG'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
-export default function userReducer(state = {user: null, loading: false, successMsg: null, errorMsg: null}, action) {
+export default function userReducer(state = {user: null, loading: false}, action) {
   switch (action.type) {
     case REQUEST(FETCH_ME):
       return update(state, {loading: {$set: true}});
     case SUCCESS(FETCH_ME):
       return update(state, {user: {$set: action.payload.data}, loading: {$set: false}});
     case SUCCESS(UPDATE_ME):
-      return update(state, {user: {$set: action.payload.data}, successMsg: {$set: '修改成功！'}});
+      return update(state, {user: {$set: action.payload.data}});
     case SUCCESS(CHANGE_PASSWORD):
-      if (action.payload.data.error)
-        return update(state, {errorMsg: {$set: action.payload.data.error}});
-      else
-        return update(state, {successMsg: {$set: '修改成功！'}});
+      return state
     case CLEAR_USER:
       return update(state, {user: {$set: null}, loading: {$set: false}});
-    case CLEAR_MSG:
-      return update(state, {errorMsg: {$set: null}, successMsg: {$set: null}});
     default:
       return state
   }
@@ -43,14 +38,12 @@ export const getCurrentUser = () => dispatch => {
     let user = value.data;
     if (!user) {
       clearAuthToken();
-      dispatch(authError('Please login'));
       dispatch(push('login'));
       return;
     }
     dispatch(authenticated());
     // TODO: init global variables   
   }).catch((error) => {
-    dispatch(authError('Please login'));
     dispatch(push('login'));
   })
 }
@@ -72,11 +65,5 @@ export const changePassword = (oldPassword, newPassword) => {
 export function clearUser() {
   return {
     type: CLEAR_USER
-  }
-}
-
-export function clearMsg() {
-  return {
-    type: CLEAR_MSG
   }
 }
