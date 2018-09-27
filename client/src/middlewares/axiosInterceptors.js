@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 
 axios.defaults.baseURL = `http://${config.api_host}:${config.api_port}`
 
-const setupAxiosInterceptors = (onUnauthenticated, store) => {
+const setupAxiosInterceptors = (store) => {
     const onRequestSuccess = config => {
         var token = localStorage.getItem('auth-token');
         if (token) {
@@ -18,7 +18,7 @@ const setupAxiosInterceptors = (onUnauthenticated, store) => {
         if (!error.response) {
 
         } else if (error.response.status === 403 || error.response.status === 401) {
-            //onUnauthenticated();
+            
         } else if (error.response.status === 404) {
             store.dispatch(push('/404'));
         } else if (error.response.status === 500) {

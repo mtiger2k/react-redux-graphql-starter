@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import promiseMiddleware from 'redux-promise-middleware';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import createHistory from 'history/createBrowserHistory'
@@ -8,15 +9,16 @@ import { createLogger } from 'redux-logger'
 import appReducer from './modules'
 import { setupAxiosInterceptors } from './middlewares/axiosInterceptors';
 import notificationMiddleware from './middlewares/notification-middleware';
-import { UNAUTH_USER, AUTH_ERROR } from './modules/auth'
 import { getCurrentUser } from './modules/user'
+import rootSaga from './sagas'
 
 export const history = createHistory()
 
 export default (initialState) => {
 
   const enhancers = []
-  const middleware = [thunk, notificationMiddleware, promiseMiddleware(), loadingBarMiddleware(), routerMiddleware(history)]
+  const sagaMiddleware = createSagaMiddleware()
+  const middleware = [thunk, sagaMiddleware, notificationMiddleware, promiseMiddleware(), loadingBarMiddleware(), routerMiddleware(history)]
 
   if (process.env.NODE_ENV === 'development') {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__
@@ -41,7 +43,7 @@ export default (initialState) => {
   }
 
   const appReducer2 = (state, action) => {
-    if (action.type === 'USER_LOGOUT') {
+    if (action.type === 'RESET_REDUX') {
       const { routing } = state
       state = { routing } 
     }
@@ -56,13 +58,9 @@ export default (initialState) => {
     composedEnhancers
   )
 
-  const logoutCallback = ()=> {
-    store.dispatch({type: 'USER_LOGOUT'});
-    localStorage.removeItem('auth-token');
-    history.push('login');
-  }
+  sagaMiddleware.run(rootSaga)
 
-  setupAxiosInterceptors(logoutCallback, store);
+  setupAxiosInterceptors(store);
 
   if (token) {
     // get user info if the token exists

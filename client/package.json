@@ -50,6 +50,7 @@
     "redux-form": "^7.4.2",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.1.1",
+    "redux-saga": "^0.16.0",
     "redux-thunk": "^2.3.0",
     "simple-line-icons": "^2.4.1",
     "subscriptions-transport-ws": "^0.9.9"

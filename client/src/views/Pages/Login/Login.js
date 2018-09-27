@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import LoginForm from './LoginForm'
-import { login } from '../../../modules/auth'
+import { loginRequest } from '../../../modules/auth'
 
 class Login extends Component {
 
   handleSubmit({username, password}) {
-    return this.props.login({username, password})
+    //return this.props.login({username, password})
+    return this.props.loginRequest({username, password})
   }
 
   render() {
@@ -47,7 +48,7 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = { login }
+const mapDispatchToProps = { loginRequest }
 
 function mapStateToProps(state) {
   return {

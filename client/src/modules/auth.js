@@ -1,58 +1,29 @@
-import axios from 'axios'
 import update from 'immutability-helper';
-import { getCurrentUser, CLEAR_USER } from './user'
-import { REQUEST, SUCCESS, FAILURE } from './actionType'
-import { SubmissionError } from 'redux-form'
 
-export const AUTH_USER = 'AUTH_USER'
-export const AUTH_USER_2 = 'AUTH_USER_2'
-export const UNAUTH_USER = 'UNAUTH_USER'
+export const REQUEST_LOGIN = 'REQUEST_LOGIN'
+export const REQUEST_LOGOUT = 'REQUEST_LOGOUT'
+
+export const SET_TOKEN = 'SET_TOKEN'
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED'
+export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED'
 
 export default function authReducer(state = {authenticated: false, token: null}, action) {
   switch (action.type) {
-    case SUCCESS(AUTH_USER):
-      return update(state, {authenticated: {$set: true}, token: {$set: action.payload.data.token}})
-    case AUTH_USER_2:
+    case SET_TOKEN:
+      return update(state, {token: {$set: action.payload.data.token}})
+    case SET_AUTHENTICATED:
       return update(state, {authenticated: {$set: true}})
-    case UNAUTH_USER:
+    case SET_UNAUTHENTICATED:
       return update(state, {authenticated: {$set: false}, token: {$set: null}})
     default:
       return state
   }
 }
 
-export const authenticated = () => ({
-  type: AUTH_USER_2,
-  payload: null
-})
-
-export const login = ({username, password}) => dispatch => 
-  dispatch({
-    type: AUTH_USER,
-    payload: axios.post(`/signin`, {username, password})
-  }).then(({value, action}) => {
-    localStorage.setItem('auth-token', value.data.token)
-    dispatch(getCurrentUser())
-  }).catch((error) => {
-    throw new SubmissionError({_error: 'Bad Login'});
-  })
-
-export const register = ({username, password}) => dispatch => 
-  dispatch({
-    type: AUTH_USER,
-    payload: axios.post(`/signup`, {username, password})
-  }).then(({value, action}) => {
-    localStorage.setItem('auth-token', value.data.token)
-    dispatch(getCurrentUser());
-    // TODO: init global variables
-  })
-
-export const signoutUser = () => dispatch => {
-  localStorage.removeItem('auth-token');
-  dispatch({type: 'USER_LOGOUT'});
+export function loginRequest ({username, password}) {
+  return {type: REQUEST_LOGIN, payload: {username, password}}
 }
 
-export const clearAuthToken = () => {
-  localStorage.removeItem('auth-token');
-};
-
+export const signoutUser = () => {
+  return ({type: REQUEST_LOGOUT});
+}
