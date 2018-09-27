@@ -4,14 +4,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import LoginForm from './LoginForm'
-import { loginRequest } from '../../../modules/auth'
 
 class Login extends Component {
-
-  handleSubmit({username, password}) {
-    //return this.props.login({username, password})
-    return this.props.loginRequest({username, password})
-  }
 
   render() {
     const { location, authenticated } = this.props;
@@ -26,7 +20,7 @@ class Login extends Component {
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
-                    <LoginForm onSubmit={this.handleSubmit.bind(this)} />
+                    <LoginForm />
                   </CardBody>
                 </Card>
                 <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
@@ -48,7 +42,7 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = { loginRequest }
+const mapDispatchToProps = { }
 
 function mapStateToProps(state) {
   return {

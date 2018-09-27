@@ -20,10 +20,6 @@ export default function authReducer(state = {authenticated: false, token: null},
   }
 }
 
-export function loginRequest ({username, password}) {
-  return {type: REQUEST_LOGIN, payload: {username, password}}
-}
-
 export const signoutUser = () => {
   return ({type: REQUEST_LOGOUT});
 }
