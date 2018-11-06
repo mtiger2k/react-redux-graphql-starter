@@ -55,12 +55,12 @@ export default (initialState, history) => {
   store.injectedReducers = {}; // Reducer registry
   store.injectedSagas = {}; // Saga registry
 
-  const { injectSaga } = getInjectors(store);
-  injectSaga('fetchMe', { saga: fetchMeSaga });
-
   setupAxiosInterceptors(store);
 
   if (token) {
+    const { injectSaga } = getInjectors(store);
+    injectSaga('fetchMe', { saga: fetchMeSaga });
+
     // get user info if the token exists
     store.dispatch(getCurrentUser());
   } else {
