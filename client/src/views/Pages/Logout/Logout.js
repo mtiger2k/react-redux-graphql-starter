@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { signoutUser } from '../../../modules/auth'
-import { Redirect } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { withApollo } from 'react-apollo';
+import injectSaga from '../../../utils/injectSaga';
+import saga from './saga'
 
 class Signout extends Component {
 
@@ -13,7 +14,7 @@ class Signout extends Component {
   }
 
   render() {
-    return <Redirect to='/login'/>
+    return null;
   }
 }
 
@@ -25,4 +26,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(null, mapDispatchToProps)(withApollo(Signout))
+const withConnect = connect(null, mapDispatchToProps);
+
+const withSaga = injectSaga({ key: 'logout', saga });
+
+export default compose(
+  withSaga,
+  withConnect,
+  withApollo
+)(Signout);

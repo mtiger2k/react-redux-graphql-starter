@@ -2,7 +2,7 @@ import React from 'react';
 import { Badge, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import { AppHeaderDropdown } from '@coreui/react';
 import { connect } from 'react-redux'
-import { history } from '../../store'
+import history from '../../utils/history'
 
 const Profile = ({user}) => (
 

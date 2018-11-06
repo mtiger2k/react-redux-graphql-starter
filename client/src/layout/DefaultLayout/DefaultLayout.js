@@ -15,7 +15,7 @@ import {
   AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import navigation from '../../_nav';
+import { getMenu } from '../../_nav';
 // routes config
 import routes from '../../routes';
 import DefaultAside from './DefaultAside';
@@ -23,9 +23,11 @@ import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
 
 import PrivateRoute from '../../components/PrivateRoute';
+import { connect } from 'react-redux'
 
 class DefaultLayout extends Component {
   render() {
+    const { user } = this.props;
     return (
       <div className="app">
         <ToastContainer position={toast.POSITION.TOP_RIGHT} className="toastify-container" toastClassName="toastify-toast" />
@@ -36,7 +38,7 @@ class DefaultLayout extends Component {
           <AppSidebar fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
-            <AppSidebarNav navConfig={navigation} {...this.props} />
+            <AppSidebarNav navConfig={getMenu(user)} {...this.props} />
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
@@ -66,5 +68,11 @@ class DefaultLayout extends Component {
   }
 }
 
-export default DefaultLayout;
+function mapStateToProps(state) {
+  return {
+      user: state.user.user,
+  }
+}
+
+export default connect(mapStateToProps)(DefaultLayout);
 

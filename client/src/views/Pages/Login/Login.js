@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Row } from 'reactstrap';
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import LoginForm from './LoginForm'
+import injectSaga from '../../../utils/injectSaga';
+import saga from './saga'
 
 class Login extends Component {
 
@@ -50,4 +52,14 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withSaga = injectSaga({ key: 'login', saga });
+
+export default compose(
+  withSaga,
+  withConnect,
+)(Login);

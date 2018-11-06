@@ -3,25 +3,14 @@ import { Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { ApolloProvider } from 'react-apollo';
-import configureStore, { history } from './store'
+import configureStore from './configureStore'
 import configureClient from './client'
-
+import history from './utils/history';
 import { getCurrentUser } from './modules/user'
 
-import Logout from './views/Pages/Login/Logout'
+import Logout from './views/Pages/Logout/Logout'
 
-// Styles
-// CoreUI Icons Set
-import '@coreui/icons/css/coreui-icons.min.css';
-// Import Flag Icons Set
-import 'flag-icon-css/css/flag-icon.min.css';
-// Import Font Awesome Icons Set
-import 'font-awesome/css/font-awesome.min.css';
-// Import Simple Line Icons Set
-import 'simple-line-icons/css/simple-line-icons.css';
-// Import Main styles for this application
-import './scss/style.css'
-//import './App.css';
+import './App.scss';
 
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,7 +22,7 @@ import { Login, Page404, Page500, Register } from './views/Pages';
 
 // initiate state
 let initialState = {};
-const store = configureStore(initialState);
+const store = configureStore(initialState, history);
 
 // Create an http link:
 const client = configureClient();

@@ -1,51 +1,45 @@
 import React from 'react';
-import Loadable from 'react-loadable'
-
+import LoadingPage from './components/Loading'
+import loadable from '@loadable/component'
 import DefaultLayout from './layout/DefaultLayout';
 
 function Loading() {
   return <div>Loading...</div>;
 }
 
-const Dashboard = Loadable({
-  loader: () => import('./views/Dashboard'),
-  loading: Loading,
+const Dashboard = loadable(() => import('./views/Dashboard'), {
+  fallback: Loading,
 });
 
-const Users = Loadable({
-  loader: () => import('./views/Users/Users'),
-  loading: Loading,
+const Users = loadable(() => import('./views/Users/Users'), {
+  fallback: Loading,
 });
 
-const User = Loadable({
-  loader: () => import('./views/Users/User'),
-  loading: Loading,
+const User = loadable(() => import('./views/Users/User'), {
+  fallback: Loading,
 });
 
-const Counter = Loadable({
-  loader: () => import('./views/Counter/Counter'),
-  loading: Loading,
+const Counter = loadable(() => import('./views/Counter/Counter'), {
+  fallback: Loading,
 });
 
-const Channels = Loadable({
-  loader: () => import('./views/Channels/ChannelsListWithData'),
-  loading: Loading,
+const Channels = loadable(() => import('./views/Channels/ChannelsListWithData'), {
+  fallback: Loading,
 });
 
-const ChannelDetails = Loadable({
-  loader: () => import('./views/Channels/ChannelDetails'),
-  loading: Loading,
+const ChannelDetails = loadable(() => import('./views/Channels/ChannelDetails'), {
+  fallback: Loading,
 });
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Home', component: DefaultLayout, private: true },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard, private: true },
-  { path: '/counter', exact: true, name: 'Counter', component: Counter, private: true },
-  { path: '/channels', exact: true, name: 'Channels', component: Channels, private: true },
-  { path: '/channels/:channelId', exact: true, name: 'Channel Details', component: ChannelDetails, private: true },
-  { path: '/users', exact: true, name: 'Users', component: Users, private: true },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User, private: true },
+  { path: '/', exact: true, name: 'Home', component: DefaultLayout },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/counter', exact: true, name: 'Counter', component: Counter },
+  { path: '/channels', exact: true, name: 'Channels', component: Channels },
+  { path: '/channels/:channelId', exact: true, name: 'Channel Details', component: ChannelDetails },
+  { path: '/users', exact: true, name: 'Users', component: Users, private: true, module: 'user', action: 'list' },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User, private: true, module: 'user', action: 'view' },
 ];
 
 export default routes;

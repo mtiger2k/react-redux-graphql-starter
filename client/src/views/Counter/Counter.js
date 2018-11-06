@@ -1,28 +1,29 @@
 import React from 'react'
 import { push } from 'connected-react-router'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
-import {
+import reducer, {
   increment,
   incrementAsync,
   decrement,
   decrementAsync
 } from '../../modules/counter'
+import injectReducer from '../../utils/injectReducer';
 
 import Upload from './Upload'
 
-const Home = props => (
+const Counter = props => (
 
   <div className="animated fadeIn">
     <Row>
       <Col xl={6}>
         <Card>
           <CardHeader>
-            <i className="fa fa-align-justify"></i> Users <small className="text-muted">example</small>
+            <i className="fa fa-align-justify"></i> Redux <small className="text-muted">example</small>
           </CardHeader>
           <CardBody>
-            <h1>Home</h1>
+            <h1>Counter</h1>
             <p>Count: {props.count}</p>
 
             <p>
@@ -72,7 +73,15 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(Home)
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'counter', reducer });
+
+export default compose(
+  withReducer, 
+  withConnect,
+)(Counter);
+
