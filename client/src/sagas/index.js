@@ -71,10 +71,8 @@ export function * fetchMeFlow () {
 }
 
 export function * logoutFlow () {
-  while (true) {
-    yield take(REQUEST_LOGOUT)
-    localStorage.removeItem('auth-token');
-    yield put({type: 'RESET_REDUX'})
-    yield put(push('/login'))
-  }
+  yield take(REQUEST_LOGOUT)
+  localStorage.removeItem('auth-token');
+  yield put({type: 'RESET_REDUX'})
+  yield put(push('/login'))
 }

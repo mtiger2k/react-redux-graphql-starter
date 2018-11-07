@@ -4,10 +4,10 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "dependencies": {
-    "@coreui/coreui": "^2.0.25",
+    "@coreui/coreui": "^2.1.0",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
     "@coreui/icons": "0.3.0",
-    "@coreui/react": "^2.0.9",
+    "@coreui/react": "^2.1.0",
     "@loadable/component": "^4.0.2",
     "apollo-cache-redux": "^0.1.0",
     "apollo-client": "^2.3.1",
