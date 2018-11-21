@@ -1,35 +1,17 @@
 import React from 'react';
-import LoadingPage from './components/Loading'
-import loadable from '@loadable/component'
 import DefaultLayout from './layout/DefaultLayout';
 
-function Loading() {
-  return <div>Loading...</div>;
-}
+const Dashboard = React.lazy(() => import('./views/Dashboard'));
 
-const Dashboard = loadable(() => import('./views/Dashboard'), {
-  fallback: Loading,
-});
+const Users = React.lazy(() => import('./views/Users/Users'));
 
-const Users = loadable(() => import('./views/Users/Users'), {
-  fallback: Loading,
-});
+const User = React.lazy(() => import('./views/Users/User'));
 
-const User = loadable(() => import('./views/Users/User'), {
-  fallback: Loading,
-});
+const Counter = React.lazy(() => import('./views/Counter/Counter'));
 
-const Counter = loadable(() => import('./views/Counter/Counter'), {
-  fallback: Loading,
-});
+const Channels = React.lazy(() => import('./views/Channels/ChannelsListWithData'));
 
-const Channels = loadable(() => import('./views/Channels/ChannelsListWithData'), {
-  fallback: Loading,
-});
-
-const ChannelDetails = loadable(() => import('./views/Channels/ChannelDetails'), {
-  fallback: Loading,
-});
+const ChannelDetails = React.lazy(() => import('./views/Channels/ChannelDetails'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [

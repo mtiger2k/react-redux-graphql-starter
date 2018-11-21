@@ -15,10 +15,32 @@ import './App.scss';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Containers
-import { DefaultLayout } from './layout';
-// Pages
-import { Login, Page404, Page500, Register } from './views/Pages';
+import LoadingPage from './components/Loading'
+import loadable from '@loadable/component'
+
+function Loading() {
+  return <LoadingPage>正在载入页面...</LoadingPage>;
+}
+
+const DefaultLayout = loadable(() => import('./layout/DefaultLayout'), {
+   fallback: Loading,
+});
+
+const Login = loadable(() => import('./views/Pages/Login/Login'), {
+   fallback: Loading,
+});
+
+const Register = loadable(() => import('./views/Pages/Register/Register'), {
+   fallback: Loading,
+});
+
+const Page404 = loadable(() => import('./views/Pages/Page404/Page404'), {
+   fallback: Loading,
+});
+
+const Page500 = loadable(() => import('./views/Pages/Page500/Page500'), {
+   fallback: Loading,
+});
 
 // initiate state
 let initialState = {};
