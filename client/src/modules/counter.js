@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { REQUEST, SUCCESS, FAILURE } from './actionType'
+import { REQUEST, SUCCESS } from './actionType'
 
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
 export const INCREMENT = 'counter/INCREMENT'

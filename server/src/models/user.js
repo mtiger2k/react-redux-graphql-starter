@@ -2,17 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs')
 
-
 const userSchema = new Schema({
   username: {type: String, required: true, unique: true, lowercase: true},
-  password: {type: String, required: true},
-  dispName: String,
-  mobileNo: String,
-  role: String,
-  parentId: String,
-  enabled: Boolean,
-  isSlave: Boolean,
-  isMaster: Boolean
+  password: {type: String, required: true}
 });
 
 // On Save Hook, encrypt password

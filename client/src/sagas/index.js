@@ -1,6 +1,6 @@
-import {take, takeLatest, call, put, fork, race} from 'redux-saga/effects'
+import {take, takeLatest, call, put} from 'redux-saga/effects'
 import { REQUEST, SUCCESS } from '../modules/actionType'
-import { login, me, register } from '../api/auth'
+import { login, me } from '../api/auth'
 import { REQUEST_LOGIN, REQUEST_LOGOUT, SET_TOKEN, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../modules/auth'
 import { FETCH_ME, CLEAR_USER } from '../modules/user'
 import { push } from 'connected-react-router'
@@ -17,7 +17,7 @@ export function * fetchUser(isLogin) {
 	  yield put(showLoading())
 	  yield put({type: REQUEST(FETCH_ME)})
 	  let response = yield call(me)
-    if (!response.data || response.status == 401 || response.status == 403) throw 'token error';
+    if (!response.data || response.status === 401 || response.status === 403) throw new Error('token error');
     yield put({type: SUCCESS(FETCH_ME), payload: response})
     yield put({type: SET_AUTHENTICATED});
   } catch (error) {
@@ -47,7 +47,7 @@ export function * authorize ({username, password, resolve, reject}) {
     if (!error.response) {
   	  yield call(reject, {_error: 'network error!'});
     } else {
-      if (error.response.status == 403 || error.response.status == 401) {
+      if (error.response.status === 403 || error.response.status === 401) {
         yield call(reject, {_error: 'bad login!'});
       }
     }

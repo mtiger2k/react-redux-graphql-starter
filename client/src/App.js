@@ -6,7 +6,6 @@ import { ApolloProvider } from 'react-apollo';
 import configureStore from './configureStore'
 import configureClient from './client'
 import history from './utils/history';
-import { getCurrentUser } from './modules/user'
 
 import Logout from './views/Pages/Logout/Logout'
 

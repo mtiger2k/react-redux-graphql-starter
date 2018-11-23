@@ -31,7 +31,7 @@ class LoginForm extends Component {
   submit({ username, password }, dispatch) {
     return new Promise((resolve, reject) => {
       dispatch({ 
-        type: 'REQUEST_LOGIN',
+        type: REQUEST_LOGIN,
         username, password,
         resolve,
         reject 

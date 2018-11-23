@@ -3,21 +3,29 @@ import React, { Component } from 'react';
 export default class ErrorBoundary extends Component {
   state = {
     hasError: false,
+    error: null,
+    errorInfo: null
   };
 
-  componentDidCatch(err, info) {
-    this.setState(() => ({ hasError: true }));
-    console.log(`Error: ${err}, ${info}`);
+  /*static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }*/
+
+  componentDidCatch(error, errorInfo) {
+    this.setState(() => ({ hasError: true, error, errorInfo }));
   }
 
   render() {
     return this.state.hasError ? (
-      <p>
-        Something went wrong :( please report any console errors{' '}
-        <a href="#">
-          here
-        </a>.
-      </p>
+      <div>
+          <h2>Something went wrong.</h2>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            {this.state.error && this.state.error.toString()}
+            <br />
+            {this.state.errorInfo.componentStack}
+          </details>
+        </div>
     ) : (
       this.props.children
     );
