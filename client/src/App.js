@@ -14,12 +14,8 @@ import './App.scss';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import LoadingPage from './components/Loading'
 import loadable from '@loadable/component'
-
-function Loading() {
-  return <LoadingPage>正在载入页面...</LoadingPage>;
-}
+import Loading from './components/Loading'
 
 const DefaultLayout = loadable(() => import('./layout/DefaultLayout'), {
    fallback: Loading,

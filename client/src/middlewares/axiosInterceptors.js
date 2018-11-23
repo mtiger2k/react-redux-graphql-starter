@@ -2,7 +2,11 @@ import axios from 'axios';
 import config from '../config'
 import { push } from 'connected-react-router'
 
-axios.defaults.baseURL = `http://${config.api_host}:${config.api_port}`
+if (config.external_api) {
+    axios.defaults.baseURL = `http://${config.api_host}:${config.api_port}`
+} else {
+    axios.defaults.baseURL = '/api';
+}
 
 const setupAxiosInterceptors = (store) => {
     const onRequestSuccess = config => {

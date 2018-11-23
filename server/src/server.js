@@ -31,8 +31,8 @@ mongoose.connect(mongoUri, { useNewUrlParser: true });
 const PORT = process.env.SERVER_PORT || 4000;
 
 const server = express();
-server.use('*', cors({ origin: 'http://localhost:3000' }));
-server.use(bodyParser.json())
+server.use(cors());
+server.use(bodyParser.json({limit:'2mb'}))
 
 // router
 require('./router')(server);
@@ -54,7 +54,7 @@ server.get(
   '/graphiql', requireAuth,
   graphiqlExpress({
     endpointURL: '/graphql',
-    subscriptionsEndpoint: `ws://localhost:4000/subscriptions`
+    subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`
   })
 ); // if you want GraphiQL enabled
 
