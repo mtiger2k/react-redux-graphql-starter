@@ -21,15 +21,11 @@ import routes from '../../routes';
 
 import PrivateRoute from '../../components/PrivateRoute';
 import { connect } from 'react-redux'
-import LoadingPage from '../../components/Loading'
+import Loading from '../../components/Loading'
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
-
-function Loading() {
-  return <LoadingPage>正在载入页面...</LoadingPage>;
-}
 
 class DefaultLayout extends Component {
   render() {
@@ -68,7 +64,7 @@ class DefaultLayout extends Component {
               </Suspense>
             </Container>
           </main>
-          <AppAside fixed hidden>
+          <AppAside fixed>
             <Suspense fallback={Loading()}>
             <DefaultAside />
             </Suspense>
