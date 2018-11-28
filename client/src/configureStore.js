@@ -63,8 +63,6 @@ export default (initialState, history) => {
 
     // get user info if the token exists
     store.dispatch(getCurrentUser());
-  } else {
-    history.push('/login');
   }
 
   return store;

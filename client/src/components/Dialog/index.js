@@ -97,10 +97,14 @@ class Dialog extends React.Component {
     this.show(options)
   }
 
-  showDeleteConfirm = (okCallback) => {
+  showConfirm = (message, okCallback) => {
+    this.showConfirm('Confirm', message, okCallback);
+  }
+
+  showConfirm = (title, message, okCallback) => {
     this.show({
-      title: '确认',
-      body: '确定要删除吗?',
+      title: title,
+      body: message,
       actions: [
         Dialog.CancelAction(),
         Dialog.OKAction(okCallback)
@@ -219,8 +223,8 @@ class DialogAction {
 }
 
 Dialog.DEFAULT_OPTIONS = {
-  defaultOkLabel: '确定',
-  defaultCancelLabel: '取消',
+  defaultOkLabel: 'Ok',
+  defaultCancelLabel: 'Cancel',
   primaryClassName: 'btn-primary'
 }
 
@@ -235,6 +239,6 @@ Dialog.SingleOKAction = () => new DialogAction(Dialog.options.defaultOkLabel, (d
 Dialog.TextPrompt = (options) => new TextPrompt(options)
 Dialog.PasswordPrompt = (options) => new PasswordPrompt(options)
 
-Dialog.displayName = '对话框'
+Dialog.displayName = 'Dialog'
 
 export default Dialog

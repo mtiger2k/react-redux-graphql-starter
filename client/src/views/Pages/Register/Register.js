@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardFooter, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
+import DatePicker from 'react-datepicker'
+import Select from 'react-select';
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+];
+
 class Register extends Component {
+  constructor() {
+    super();
+    this.state = {date: new Date()}
+  }
+
+  onDateChange = (value) => {
+    this.setState({date: value})
+  }
+
   render() {
     return (
       <div className="app flex-row align-items-center">
@@ -25,6 +43,18 @@ class Register extends Component {
                       <InputGroupText>@</InputGroupText>
                     </InputGroupAddon>
                     <Input type="text" placeholder="Email" />
+                  </InputGroup>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>@</InputGroupText>
+                    </InputGroupAddon>
+                    <DatePicker wrapperClassName="form-control" className="form-control" dateFormat="yyyy/MM/dd h:mm aa" timeFormat="aa HH:mm" selected={this.state.date} onChange={this.onDateChange} showMonthDropdown showYearDropdown showTimeSelect dropdownMode="select" />
+                  </InputGroup>
+                  <InputGroup className="mb-3 inline-block">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>@</InputGroupText>
+                    </InputGroupAddon>
+                    <Select options={options} className="form-control select" isClearable={true} />
                   </InputGroup>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">

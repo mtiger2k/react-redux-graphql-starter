@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { ApolloProvider } from 'react-apollo';
 import configureStore from './configureStore'
-import configureClient from './client'
+import configureClient from './configClient'
 import history from './utils/history';
 
 import Logout from './views/Pages/Logout/Logout'
@@ -13,9 +13,15 @@ import './App.scss';
 
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 import loadable from '@loadable/component'
 import Loading from './components/Loading'
+
+import { registerLocale, setDefaultLocale } from 'react-datepicker'
+import zhCN from 'date-fns/locale/zh-CN'
+registerLocale('zh-CN', zhCN)
+setDefaultLocale('zh-CN')
 
 const DefaultLayout = loadable(() => import('./layout/DefaultLayout'), {
    fallback: Loading,
