@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
-import { signoutUser } from '../../../modules/auth'
+import { logout } from '../../../modules/auth'
 import { bindActionCreators, compose } from 'redux'
 import { withApollo } from 'react-apollo';
 import injectSaga from '../../../utils/injectSaga';
@@ -9,7 +9,7 @@ import saga from './saga'
 class Signout extends Component {
 
   componentWillMount() {
-    this.props.signoutUser();
+    this.props.logout();
     this.props.client.resetStore().then(() => console.log('apollo reset'))
   }
 
@@ -21,7 +21,7 @@ class Signout extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      signoutUser
+      logout
     },
     dispatch
   )

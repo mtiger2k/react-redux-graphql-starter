@@ -4,7 +4,6 @@ import update from 'immutability-helper';
 export const FETCH_ME = 'FETCH_ME'
 export const UPDATE_ME = 'UPDATE_ME'
 export const CLEAR_USER = 'CLEAR_USER'
-export const CLEAR_MSG = 'CLEAR_MSG'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
 export default function userReducer(state = {user: null, loading: false}, action) {
